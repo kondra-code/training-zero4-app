@@ -1,0 +1,129 @@
+{
+  "ingredients": [
+    {
+      "id": "water",
+      "name": "Water"
+    },
+    {
+      "id": "cherry",
+      "name": "Cherry"
+    },
+    {
+      "id": "lime",
+      "name": "Lime"
+    },
+    {
+      "id": "tropical",
+      "name": "Tropical"
+    },
+    {
+      "id": "lemon",
+      "name": "Lemon"
+    }
+  ],
+  "beverages": [
+    {
+      "id": "1",
+      "name": "Water",
+      "recipe": [
+        {
+          "ingredientId": "water",
+          "rate": 66
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Lemon Zest",
+      "recipe": [
+        {
+          "ingredientId": "water",
+          "rate": 66
+        },
+        {
+          "ingredientId": "lemon",
+          "rate": 0.25
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Tropical Wave",
+      "recipe": [
+        {
+          "ingredientId": "water",
+          "rate": 66
+        },
+        {
+          "ingredientId": "tropical",
+          "rate": 0.15
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Lime Chiller",
+      "recipe": [
+        {
+          "ingredientId": "water",
+          "rate": 66
+        },
+        {
+          "ingredientId": "lime",
+          "rate": 0.15
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Ruby Refresher",
+      "recipe": [
+        {
+          "ingredientId": "water",
+          "rate": 66
+        },
+        {
+          "ingredientId": "cherry",
+          "rate": 0.15
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Citrus Twist",
+      "recipe": [
+        {
+          "ingredientId": "water",
+          "rate": 66
+        },
+        {
+          "ingredientId": "lemon",
+          "rate": 0.1
+        },
+        {
+          "ingredientId": "cherry",
+          "rate": 0.1
+        }
+      ]
+    },
+
+    {
+      "id": "7",
+      "name": "Lime Breeze",
+      "recipe": [
+        {
+          "ingredientId": "water",
+          "rate": 66
+        },
+        {
+          "ingredientId": "lemon",
+          "rate": 0.5
+        },
+        {
+          "ingredientId": "lime",
+          "rate": 0.5
+        }
+      ]
+    }
+  ]
+}

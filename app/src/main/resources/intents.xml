@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pumpIntents>
+    <intents>
+       <intent name="dilution" runDry="true">
+          <op type="tpour" duration="25000" rate="30"/>
+       </intent>
+
+       <!-- Micros -->
+       <intent name="micro:prime">
+          <op type="tpour" rate="0.8" duration="10000" diluted="true"/>
+       </intent>
+       <intent name="micro:holdeToPour">
+          <op type="tpour" rate="0.8" duration="25000" diluted="true"/>
+       </intent>
+       
+       <intent name="micro:10">
+          <op type="tpour" rate="0.1" duration="4000" diluted="true"/>
+       </intent>
+       <intent name="micro:20">
+          <op type="tpour" rate="0.2" duration="4000" diluted="true"/>
+       </intent>
+       <intent name="micro:30">
+          <op type="tpour" rate="0.3" duration="4000" diluted="true"/>
+       </intent>
+       <intent name="micro:40">
+          <op type="tpour" rate="0.4" duration="4000" diluted="true"/>
+       </intent>
+       <intent name="micro:50">
+          <op type="tpour" rate="0.5" duration="4000" diluted="true"/>
+       </intent>
+       <intent name="micro:60">
+          <op type="tpour" rate="0.6" duration="4000" diluted="true"/>
+       </intent>
+       <intent name="micro:70">
+          <op type="tpour" rate="0.7" duration="4000" diluted="true"/>
+       </intent>
+       <intent name="micro:80">
+          <op type="tpour" rate="0.8" duration="4000" diluted="true"/>
+       </intent>
+       <intent name="micro:90">
+          <op type="tpour" rate="0.9" duration="4000" diluted="true"/>
+       </intent>
+       
+       <intent name="micro:flush">
+          <op type="tpour" rate="0.9" duration="7000" diluted="true"/>
+          <op type="tpour" rate="0.9" duration="23000" diluted="true"/>
+          <op type="delay" duration="60000"/>
+          <op type="tpour" rate="0.9" duration="30000" diluted="true"/>
+       </intent>
+
+    </intents>
+    
+    <rules>
+       <rule type="pumpType" key="micro">
+          <intent type="PRIME" ref="micro:prime"/>
+          <intent type="PURGE" ref="micro:prime"/>
+          <intent type="FLUSH" ref="micro:prime"/>
+          <intent type="HOLD_TO_POUR" ref="micro:holdToPour"/>
+          <intent type="10" ref="micro:10"/>
+          <intent type="20" ref="micro:20"/>
+          <intent type="30" ref="micro:30"/>
+          <intent type="40" ref="micro:40"/>
+          <intent type="50" ref="micro:50"/>
+          <intent type="60" ref="micro:60"/>
+          <intent type="70" ref="micro:70"/>
+          <intent type="80" ref="micro:80"/>
+          <intent type="90" ref="micro:90"/>
+       </rule>
+       <rule type="pumpType" key="valve">
+          <intent type="dilution" ref="dilution"/>
+       </rule>
+    </rules>
+</pumpIntents>

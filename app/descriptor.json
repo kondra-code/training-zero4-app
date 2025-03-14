@@ -1,0 +1,9 @@
+{
+  "kos": {
+    "app": {
+      "appClass": "com.kondra.kos.zero4.Zero4App",
+      "appId": "system",
+      "altClassesDir": "/home/david/src/zero4-app/target/classes"
+    }
+  }
+}

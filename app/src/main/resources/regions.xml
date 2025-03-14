@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<regionDefs>
+    <regions>
+        <region id="factory"/>
+        <region id="us">
+            <country>US</country>
+            <unitSystemId>us</unitSystemId>
+            <timeFormatId>t_hhmma</timeFormatId>
+            <dateFormatId>d_MMddyy</dateFormatId>
+        </region>
+    </regions>
+</regionDefs>

@@ -1,0 +1,71 @@
+{
+  "beverages": [
+    {
+      "id": "1",
+      "name": "Water",
+      "icon": "/system/brandset/icons/water-drop.svg",
+      "colors": {
+        "primary": "#45B1FF",
+        "text": "#027BA8"
+      }
+    },
+    {
+      "id": "2",
+      "name": "Lemon Zest",
+      "icon": "/system/brandset/icons/lemon.svg",
+      "colors": {
+        "primary": "#FFEF45",
+        "text": "#EFBF18"
+      }
+    },
+    {
+      "id": "3",
+      "name": "Tropical Wave",
+      "icon": "/system/brandset/icons/cherries.svg",
+      "colors": {
+        "primary": "#FF477E",
+        "text": "#FF477E"
+      }
+    },
+    {
+      "id": "4",
+      "name": "Lime Chiller",
+      "icon": "/system/brandset/icons/lime.svg",
+      "colors": {
+        "primary": "#AACC00",
+        "text": "#AACC00"
+      }
+    },
+    {
+      "id": "5",
+      "name": "Ruby Refresher",
+      "icon": "/system/brandset/icons/lemon-lime.svg",
+      "colors": {
+        "primary": "#FFEF45",
+        "secondary": "#AACC00",
+        "text": "#FF477E"
+      }
+    },
+    {
+      "id": "6",
+      "name": "Citrus Twist",
+      "icon": "/system/brandset/icons/lemon.svg",
+      "colors": {
+        "primary": "#FFEF45",
+        "secondary": "#FF477E",
+        "text": "#F8961E"
+      }
+    },
+    {
+      "id": "7",
+      "name": "Lime Breeze",
+      "icon": "/system/brandset/icons/cocktail.svg",
+      "colors": {
+        "primary": "#FFEF45",
+        "secondary": "#FF477E",
+        "text": "#F8961E"
+      }
+    }
+  ],
+  "flavors": []
+}

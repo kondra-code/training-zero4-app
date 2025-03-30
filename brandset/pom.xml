@@ -24,15 +24,17 @@
                             <goal>kabtool</goal>
                         </goals>
                         <configuration>
-                           <type>zero4.brandset</type>
-                           <content>
-                              <copy>
-                                 <includes>
-                                    <include>brandset.json</include>
-                                 </includes>
-                              </copy>
-                           </content>
-                        </configuration>                        
+                            <type>zero4.brandset</type>
+                            <content>
+                                <copy>
+                                    <includes>
+                                        <include>brandset.json</include>
+                                        <include>assets</include>
+
+                                    </includes>
+                                </copy>
+                            </content>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

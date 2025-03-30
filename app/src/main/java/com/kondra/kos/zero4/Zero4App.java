@@ -11,6 +11,7 @@ import com.tccc.kos.commons.util.KosUtil;
 import com.tccc.kos.commons.util.resource.ClassLoaderResourceLoader;
 import com.tccc.kos.core.service.app.BaseAppConfig;
 import com.tccc.kos.core.service.app.SystemApplication;
+import com.tccc.kos.core.service.browser.BrowserService;
 import com.tccc.kos.core.service.region.XmlRegionFactory;
 import com.tccc.kos.ext.dispense.service.ingredient.IngredientService;
 
@@ -38,6 +39,10 @@ public class Zero4App extends SystemApplication<BaseAppConfig> {
     private IngredientService ingredientService;   // used to register ingredients from the brandset
     @Getter
     private Brandset brandset;                     // our brandset loaded from another KAB
+    private VFSSource uiVfsSource;
+    private static final String UI_KAB_TYPE = "kos.ui";
+    @Autowired
+    private BrowserService browserService;
 
     /**
      * Called when the application is started. If this application had any
@@ -99,6 +104,9 @@ public class Zero4App extends SystemApplication<BaseAppConfig> {
      */
     @Override
     public void started() throws Exception {
-        //TODO : load ui
+        // nav to the ui
+        if (uiVfsSource != null) {
+            browserService.goToUrl(uiVfsSource.getFullPath("index.html"));
+        }
     }
 }

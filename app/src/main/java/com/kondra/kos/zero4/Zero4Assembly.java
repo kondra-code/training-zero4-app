@@ -56,8 +56,6 @@ public class Zero4Assembly extends DispenseAssembly implements CoreAssembly {
     private BeverageNozzlePipeline beveragePipeline;
     private Zero4Board zero4;
 
-    private Zero4PourDelegate delegate;
-
     public Zero4Assembly(JsonDescriptor descriptor) throws Exception {
         super("core", descriptor);
     }
@@ -91,7 +89,7 @@ public class Zero4Assembly extends DispenseAssembly implements CoreAssembly {
         builder.setPumpIterator(zero4.getMicros(), 0, 1);
         builder.setNameIterator("M", 1, 1);
         builder.buildMicros(4, 0);
-        delegate = new Zero4PourDelegate();
+
         // kOS abstracts different ways to pour from a nozzle using nozzle pipelines.
         // For ingredient pouring, the {@code IngredientNozzlePipeline} provides a concept
         // intents, where an intent is a named sequence of low level pump operations that
@@ -116,7 +114,11 @@ public class Zero4Assembly extends DispenseAssembly implements CoreAssembly {
         // developers can model virtually any type of beverage pouring.
         Zero4PourEngine engine = new Zero4PourEngine();
         beveragePipeline = new BeverageNozzlePipeline(engine);
-        beveragePipeline.setDelegate(delegate);
+
+        // The beverage pour engine doesn't know about fixed volumes so we need to provide a delegate
+        // that returns the max beverage pour volume. This can also be used to return named volumes
+        // such as volumes for various cups, but we won't be using this in this tutorial.
+        beveragePipeline.setDelegate(new Zero4PourDelegate());
 
         nozzle.add(beveragePipeline);
     }

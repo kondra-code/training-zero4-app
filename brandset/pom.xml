@@ -30,7 +30,6 @@
                                     <includes>
                                         <include>brandset.json</include>
                                         <include>assets</include>
-
                                     </includes>
                                 </copy>
                             </content>

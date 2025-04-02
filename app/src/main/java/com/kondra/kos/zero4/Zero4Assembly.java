@@ -69,13 +69,13 @@ public class Zero4Assembly extends DispenseAssembly implements CoreAssembly {
      */
     @Override
     public void load() throws Exception {
-        // Create a nozzle for the dispenser and add to the assembly
-        Nozzle nozzle = new Nozzle(this, "nozzle");
-        addNozzle(nozzle);
-
         // Create the logical zero4 board and add to the assembly
         zero4 = new Zero4Board(this);
         addBoard(zero4);
+
+        // Create a nozzle for the dispenser and add to the assembly
+        Nozzle nozzle = new Nozzle(this, "nozzle");
+        addNozzle(nozzle);
 
         // kOS models how ingredients, pump and nozzles are connected, introducing
         // various logical components along the way which allows kOS to handle a
@@ -129,6 +129,13 @@ public class Zero4Assembly extends DispenseAssembly implements CoreAssembly {
      */
     @Override
     public void start() {
+    }
+
+    /**
+     * Called after {@code start()} returns and the assembly is fully installed in the device.
+     */
+    @Override
+    public void started() {
         // Load the zero4 adapter if not in the simulator. The adapter is a native program that
         // interfaces to the custom hardware on the Zero4 board and links back to the Zero4Board
         // object in the assembly, allowing the logical board to control the real hardware. The
@@ -137,13 +144,7 @@ public class Zero4Assembly extends DispenseAssembly implements CoreAssembly {
         if (!KosCore.isSimulator()) {
             spawnService.addProcess(new Zero4Adapter());
         }
-    }
 
-    /**
-     * Called after {@code start()} returns and the assembly is fully installed in the device.
-     */
-    @Override
-    public void started() {
         // Water and carb are always connected so we can insert them as intrinsic ingredients.
         // Intrinsics are locked in place and cannot be replaced once installed.
         insertionService.insertIntrinsic(Ingredient.WATER, zero4.getWater().getHolder());

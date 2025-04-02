@@ -35,14 +35,16 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class Zero4App extends SystemApplication<BaseAppConfig> {
+    // The KAB type for the user interface kab
+    private static final String UI_KAB_TYPE = "zero4.ui";
+
     @Autowired
     private IngredientService ingredientService;   // used to register ingredients from the brandset
+    @Autowired
+    private BrowserService browserService;         // used to navigate the browser to our ui
     @Getter
     private Brandset brandset;                     // our brandset loaded from another KAB
-    private VFSSource uiVfsSource;
-    private static final String UI_KAB_TYPE = "kos.ui";
-    @Autowired
-    private BrowserService browserService;
+    private VFSSource uiVfsSource;                 // where the ui KAB is mounted in vfs
 
     /**
      * Called when the application is started. If this application had any
@@ -86,6 +88,13 @@ public class Zero4App extends SystemApplication<BaseAppConfig> {
 
             // Log that we mounted the KAB and where it's located in VFS
             log.info("Brandset mounted at: {}", source.getBasePath());
+        }
+
+        // If there is a user interface KAB in our section, mount it into the vfs so that
+        // we can navigate the browser to this user interface when we finish loading.
+        kab = getSection().getKabByType(UI_KAB_TYPE);
+        if (kab != null) {
+            uiVfsSource = getVfs().mount("/ui", kab);
         }
 
         // kOS models hardware in the device in a container called an assembly. This allows the

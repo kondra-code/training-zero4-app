@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>com.kondra.kos.training</groupId>
         <artifactId>training-zero4</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>0.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>training-zero4-app</artifactId>
@@ -59,17 +59,18 @@
                             <goal>kabtool</goal>
                         </goals>
                         <configuration>
-                           <type>kos.system</type>
-                           <content>
-                              <copy>
-                                 <include>descriptor.json</include>
-                              </copy>
-                              <copy>
-                                 <include>${project.build.directory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</include>
-                                 <dir>lib</dir>
-                              </copy>
-                           </content>
-                        </configuration>                        
+                            <type>kos.system</type>
+                            <content>
+                                <copy>
+                                    <include>descriptor.json</include>
+                                </copy>
+                                <copy>
+                                    <include>
+                                        ${project.build.directory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</include>
+                                    <dir>lib</dir>
+                                </copy>
+                            </content>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

@@ -107,7 +107,7 @@ public class Zero4PourEngine extends BeveragePourEngine<BeveragePourEngineConfig
     protected FutureWork buildFuture(Pourable pourable, BeveragePumpEventInitiator initiator) {
         // Pour builder to gather pumps and rates. Because Zero4 supports variable rate
         // ingredients, there is a bit more complexity in constructing a pour than simply
-        // turning on the correct valves. This handled by the builder.
+        // turning on the correct valves. This is handled by the builder.
         PourBuilder builder = new PourBuilder(pourable, this, app.getBrandset());
 
         // Return the future for the pour

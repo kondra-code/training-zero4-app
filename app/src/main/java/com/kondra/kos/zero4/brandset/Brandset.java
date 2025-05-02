@@ -44,6 +44,13 @@ public class Brandset implements IngredientSource {
     }
 
     /**
+     * Return the beverage with the specified id
+     */
+    public Beverage getBeverage(String id) {
+        return beverages.stream().filter(b -> b.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    /**
      * Part of the {@code IngredientSource} interface which identifies the unique id of
      * the source so that ingredients from different sources can be uniquely identified.
      */

@@ -9,7 +9,6 @@ import com.kondra.kos.zero4.hardware.Zero4Board;
 import com.kondra.kos.zero4.pour.Zero4PourDelegate;
 import com.kondra.kos.zero4.pour.Zero4PourEngine;
 import com.tccc.kos.commons.core.context.annotations.Autowired;
-import com.tccc.kos.commons.util.json.JsonDescriptor;
 import com.tccc.kos.commons.util.resource.ClassLoaderResourceLoader;
 import com.tccc.kos.core.app.KosCore;
 import com.tccc.kos.core.service.assembly.CoreAssembly;
@@ -56,8 +55,8 @@ public class Zero4Assembly extends DispenseAssembly implements CoreAssembly {
     private BeverageNozzlePipeline beveragePipeline;
     private Zero4Board zero4;
 
-    public Zero4Assembly(JsonDescriptor descriptor) throws Exception {
-        super("core", descriptor);
+    public Zero4Assembly() throws Exception {
+        super("core");
     }
 
     /**

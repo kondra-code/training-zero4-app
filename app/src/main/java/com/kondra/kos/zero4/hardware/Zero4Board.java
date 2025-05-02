@@ -9,12 +9,12 @@ import java.util.List;
 import com.kondra.kos.zero4.hardware.pumps.BasePump;
 import com.kondra.kos.zero4.hardware.pumps.MacroPump;
 import com.kondra.kos.zero4.hardware.pumps.MicroPump;
+import com.tccc.kos.commons.core.service.blink.binarymsg.BinaryMsgSession;
 import com.tccc.kos.commons.util.KosUtil;
 import com.tccc.kos.commons.util.concurrent.future.FutureEvent;
 import com.tccc.kos.commons.util.concurrent.future.FutureWork;
 import com.tccc.kos.core.service.assembly.Assembly;
-import com.tccc.kos.core.service.hardware.BoardIfaceLink;
-import com.tccc.kos.core.service.hardware.HardwareLink;
+import com.tccc.kos.core.service.hardware.IfaceAware;
 import com.tccc.kos.ext.dispense.Pump;
 import com.tccc.kos.ext.dispense.PumpBoard;
 
@@ -41,14 +41,13 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Getter
-public class Zero4Board extends PumpBoard {
+public class Zero4Board extends PumpBoard implements IfaceAware<Zero4BoardIface> {
     // reason codes
     private static final String REASON_errNotConnected = "errNotConnected";
 
     private MacroPump water;        // plain water macro
     private MacroPump carb;         // carb water macro
     private List<Pump<?>> micros;   // micro pumps
-    private Zero4BoardIface iface;  // iface to the native adapter that controls hardware
 
     /**
      * Create a new Zero4 board.
@@ -82,7 +81,7 @@ public class Zero4Board extends PumpBoard {
         // Create a new future that will perform the requested pour
         FutureWork future = new FutureWork("tpour-" + pump.getName(), f -> {
             // If there is no iface, we can't turn the pump on
-            if (iface == null) {
+            if (getIface() == null) {
                 f.fail(REASON_errNotConnected);
             } else {
                 // Use the iface to run the pump for the specified duration.
@@ -91,7 +90,7 @@ public class Zero4Board extends PumpBoard {
                 // is complete when the duration is complete. A more robust
                 // implementation would send pump status back over the iface.
                 log.info("start: {}", pump.getName());
-                iface.startPump(pump.getPos(), rate, duration);
+                getIface().startPump(pump.getPos(), rate, duration);
                 KosUtil.scheduleCallback(() -> f.success(), duration);
             }
         });
@@ -100,8 +99,8 @@ public class Zero4Board extends PumpBoard {
         future.append("cancel", FutureEvent.CANCEL, f -> {
             // If cancelled, use the iface to stop the pump
             log.info("cancel: {}", pump.getName());
-            if (iface != null) {
-                iface.stopPump(pump.getPos());
+            if (getIface() != null) {
+                getIface().stopPump(pump.getPos());
             }
         });
 
@@ -136,26 +135,13 @@ public class Zero4Board extends PumpBoard {
     }
 
     /**
-     * Called when an adapter for the actual hardware connects to java.
-     * This links the iface to the {@class Board} instance and indicates
-     * that the instance is now able to communicate directly to hardware.
+     * Part of the {@class IfaceAware} interface. When the blink connection
+     * is established for the board, it will call {@code createIface()}
+     * to create the board-specific iface instance. This can be accessed
+     * via the {@code getIface()} call.
      */
     @Override
-    public void onLink(HardwareLink link) {
-        // grab the iface from the link
-        if (link instanceof BoardIfaceLink blink) {
-            iface = new Zero4BoardIface(blink.getSession());
-        }
-    }
-
-    /**
-     * Called when an adapter shuts down and the connection to hardware
-     * is lost. This indicates that the iface to the actual hardware is
-     * no longer usable.
-     */
-    @Override
-    public void onUnlink(HardwareLink link) {
-        // remove the iface as session is gone
-        iface = null;
+    public Zero4BoardIface createIface(BinaryMsgSession session) {
+        return new Zero4BoardIface(session);
     }
 }

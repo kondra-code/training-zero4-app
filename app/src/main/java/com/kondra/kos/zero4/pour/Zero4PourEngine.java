@@ -9,11 +9,14 @@ import com.kondra.kos.zero4.brandset.Brandset;
 import com.kondra.kos.zero4.brandset.RecipePart;
 import com.kondra.kos.zero4.pour.BevPourable.BevDef;
 import com.tccc.kos.commons.core.context.annotations.Autowired;
+import com.tccc.kos.commons.util.concurrent.future.FailedFuture;
 import com.tccc.kos.commons.util.concurrent.future.FutureWork;
+import com.tccc.kos.commons.util.concurrent.future.ParallelFuture;
 import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePourEngine;
 import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePourEngineConfig;
 import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePumpEventInitiator;
 import com.tccc.kos.ext.dispense.pipeline.beverage.Pourable;
+import com.tccc.kos.ext.dispense.pipeline.beverage.RecipeExtractor;
 import com.tccc.kos.ext.dispense.pipeline.beverage.graph.BevGraphBuilder;
 import com.tccc.kos.ext.dispense.pipeline.beverage.graph.BeverageNode;
 
@@ -105,12 +108,35 @@ public class Zero4PourEngine extends BeveragePourEngine<BeveragePourEngineConfig
      */
     @Override
     protected FutureWork buildFuture(Pourable pourable, BeveragePumpEventInitiator initiator) {
-        // Pour builder to gather pumps and rates. Because Zero4 supports variable rate
-        // ingredients, there is a bit more complexity in constructing a pour than simply
-        // turning on the correct valves. This is handled by the builder.
-        PourBuilder builder = new PourBuilder(pourable, this, app.getBrandset());
+        // Grab the beverage definition from the pourable
+        BevDef def = ((BevPourable)pourable).getBevDef();
+
+        // Create recipe extractor to extract the pumps to use for the specified beverage.
+        // This performs a downward search in the beverage graph to find available pumps
+        // to pour the specified beverage.
+        RecipeExtractor extractor = new RecipeExtractor(this).addIngredients(def.getBevId());
+
+        // If the extractor didn't find a way to pour, return an error
+        if (!extractor.isValid()) {
+            return new FailedFuture("bev-pour", "errUnavailable");
+        }
+
+        // Get the beverage from the brandset
+        Beverage bev = app.getBrandset().getBeverage(def.getBevId());
+
+        // Compute duration of pour from volume
+        int durationMs = (int)((pourable.getEffectiveVolume() / bev.getRate()) * 1000);
+
+        // Parallel future to run all the pumps concurrently
+        ParallelFuture future = new ParallelFuture("bev-pour");
+        for (RecipePart part : bev.getRecipe()) {
+            future.add(extractor.getPumpForIngredient(part.getIngredientId()).tpour(durationMs, part.getRate()));
+        }
+
+        // Add pumps to the initiator to generate required kOS pump events
+        initiator.setPumps(extractor.getPumps());
 
         // Return the future for the pour
-        return builder.pour(initiator);
+        return future;
     }
 }

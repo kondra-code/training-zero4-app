@@ -21,5 +21,6 @@ import lombok.Setter;
 public class Beverage {
     private String id;               // unique id of the beverage
     private String name;             // display name of the beverage
+    private double rate;             // overall rate of the beverage
     private List<RecipePart> recipe; // recipe to pour the beverage
 }

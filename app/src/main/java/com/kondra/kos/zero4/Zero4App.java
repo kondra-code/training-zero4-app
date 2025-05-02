@@ -101,7 +101,7 @@ public class Zero4App extends SystemApplication<BaseAppConfig> {
         // logical version of hardware to be created and configured before real hardware can
         // connect to it, preventing race conditions. We create the {@code Assembly} and install
         // it, making it available in kOS.
-        installAssembly(new Zero4Assembly(getDescriptor()));
+        installAssembly(new Zero4Assembly());
     }
 
     /**

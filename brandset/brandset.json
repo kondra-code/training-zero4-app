@@ -25,6 +25,7 @@
     {
       "id": "1",
       "name": "Water",
+      "rate": 66,
       "recipe": [
         {
           "ingredientId": "water",
@@ -35,6 +36,7 @@
     {
       "id": "2",
       "name": "Lemon Zest",
+      "rate": 66.25,
       "recipe": [
         {
           "ingredientId": "water",
@@ -49,6 +51,7 @@
     {
       "id": "3",
       "name": "Tropical Wave",
+      "rate": 66.15,
       "recipe": [
         {
           "ingredientId": "water",
@@ -63,6 +66,7 @@
     {
       "id": "4",
       "name": "Lime Chiller",
+      "rate": 66.15,
       "recipe": [
         {
           "ingredientId": "water",
@@ -77,6 +81,7 @@
     {
       "id": "5",
       "name": "Ruby Refresher",
+      "rate": 66.15,
       "recipe": [
         {
           "ingredientId": "water",
@@ -91,6 +96,7 @@
     {
       "id": "6",
       "name": "Citrus Twist",
+      "rate": 66.2,
       "recipe": [
         {
           "ingredientId": "water",
@@ -110,6 +116,7 @@
     {
       "id": "7",
       "name": "Lime Breeze",
+      "rate": 67,
       "recipe": [
         {
           "ingredientId": "water",

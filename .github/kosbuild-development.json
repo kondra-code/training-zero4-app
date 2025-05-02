@@ -1,0 +1,19 @@
+{
+  "default_keyset": "prod.kos",
+  "build_cmd": "./quickbuild.sh",
+
+  "artifacts": [
+    {
+      "id": "training-zero4-app",
+      "filename": "app/target/training-zero4-app-${KOS_STD_VERSION_REGEX}.kab",
+      "artifactstore": "kos-cdn",
+      "marketplace": 1
+    },
+    {
+      "id": "training-zero4-brandset",
+      "filename": "brandset/target/training-zero4-brandset-${KOS_STD_VERSION_REGEX}.kab",
+      "artifactstore": "kos-cdn",
+      "marketplace": 1
+    }
+  ]
+}

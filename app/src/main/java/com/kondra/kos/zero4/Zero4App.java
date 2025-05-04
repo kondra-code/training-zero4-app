@@ -47,6 +47,18 @@ public class Zero4App extends SystemApplication<BaseAppConfig> {
     private VFSSource uiVfsSource;                 // where the ui KAB is mounted in vfs
 
     /**
+     * Called when the application loads. Any beans that the application wants to create
+     * that need to be autowired / configured, should be created here and added to the context.
+     * When this method returns, all the beans in the context will be autowired and configured,
+     * making them available for use in the {@code start()} method.
+     */
+    @Override
+    public void load() {
+        // add test controller so we can enable / disable pumps
+        addToCtx(new TestController());
+    }
+
+    /**
      * Called when the application is started. If this application had any
      * services, controllers or other beans to add to the application {@code BeanContext}
      * then we would create these in {@code load()}. This would allow kOS to autowire,

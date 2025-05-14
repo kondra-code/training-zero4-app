@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * System application for Zero4 demo kit dispenser.
  * <p>
- * When kOS boots finishes initializing all internal services, it will
+ * When kOS boots and finishes initializing all internal services, it will
  * load a single user-defined system application which takes control of
  * the device and defines how it works. This particular system application
  * turns the Zero4 board into a mini-dispenser, utilizing the four micro,

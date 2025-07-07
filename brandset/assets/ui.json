@@ -5,8 +5,8 @@
       "name": "Water",
       "icon": "/system/brandset/icons/water-drop.svg",
       "colors": {
-        "primary": "#45B1FF",
-        "text": "#027BA8"
+        "primary": "#35A9FC",
+        "text": "#191919"
       }
     },
     {
@@ -14,8 +14,8 @@
       "name": "Lemon Zest",
       "icon": "/system/brandset/icons/lemon.svg",
       "colors": {
-        "primary": "#FFEF45",
-        "text": "#EFBF18"
+        "primary": "#FFF26D",
+        "text": "#191919"
       }
     },
     {
@@ -23,8 +23,8 @@
       "name": "Tropical Wave",
       "icon": "/system/brandset/icons/cherries.svg",
       "colors": {
-        "primary": "#FF477E",
-        "text": "#FF477E"
+        "primary": "#FF6D98",
+        "text": "#191919"
       }
     },
     {
@@ -32,38 +32,38 @@
       "name": "Lime Chiller",
       "icon": "/system/brandset/icons/lime.svg",
       "colors": {
-        "primary": "#AACC00",
-        "text": "#AACC00"
+        "primary": "",
+        "text": "#191919"
       }
     },
     {
       "id": "5",
       "name": "Ruby Refresher",
-      "icon": "/system/brandset/icons/lemon-lime.svg",
+      "icon": "/system/brandset/icons/peach.svg",
       "colors": {
-        "primary": "#FFEF45",
-        "secondary": "#AACC00",
-        "text": "#FF477E"
+        "primary": "#FFF26D",
+        "secondary": "#FF547B",
+        "text": "#191919"
       }
     },
     {
       "id": "6",
       "name": "Citrus Twist",
-      "icon": "/system/brandset/icons/lemon.svg",
+      "icon": "/system/brandset/icons/tropical-drink.svg",
       "colors": {
-        "primary": "#FFEF45",
-        "secondary": "#FF477E",
-        "text": "#F8961E"
+        "primary": "#FFF26D",
+        "secondary": "#C9F242",
+        "text": "#191919"
       }
     },
     {
       "id": "7",
       "name": "Lime Breeze",
-      "icon": "/system/brandset/icons/cocktail.svg",
+      "icon": "/system/brandset/icons/palm-tree.svg",
       "colors": {
-        "primary": "#FFEF45",
-        "secondary": "#FF477E",
-        "text": "#F8961E"
+        "primary": "#C9F242",
+        "secondary": "#89F1FF",
+        "text": "#191919"
       }
     }
   ],

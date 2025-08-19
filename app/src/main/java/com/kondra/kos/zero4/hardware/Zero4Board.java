@@ -14,11 +14,12 @@ import com.tccc.kos.commons.util.KosUtil;
 import com.tccc.kos.commons.util.concurrent.future.FutureEvent;
 import com.tccc.kos.commons.util.concurrent.future.FutureWork;
 import com.tccc.kos.core.service.assembly.Assembly;
-import com.tccc.kos.core.service.hardware.IfaceAware;
+import com.tccc.kos.core.service.hardware.IfaceAwareBoard;
 import com.tccc.kos.ext.dispense.Pump;
 import com.tccc.kos.ext.dispense.PumpBoard;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -41,10 +42,12 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Getter
-public class Zero4Board extends PumpBoard implements IfaceAware<Zero4BoardIface> {
+public class Zero4Board extends PumpBoard implements IfaceAwareBoard<Zero4BoardIface> {
     // reason codes
     private static final String REASON_errNotConnected = "errNotConnected";
 
+    @Getter @Setter
+    private Zero4BoardIface iface;
     private MacroPump water;        // plain water macro
     private MacroPump carb;         // carb water macro
     private List<Pump<?>> micros;   // micro pumps
@@ -80,28 +83,21 @@ public class Zero4Board extends PumpBoard implements IfaceAware<Zero4BoardIface>
     public FutureWork tpour(BasePump pump, int duration, double rate) {
         // Create a new future that will perform the requested pour
         FutureWork future = new FutureWork("tpour-" + pump.getName(), f -> {
-            // If there is no iface, we can't turn the pump on
-            if (getIface() == null) {
-                f.fail(REASON_errNotConnected);
-            } else {
-                // Use the iface to run the pump for the specified duration.
-                // Since the simple interface to the Zero4 board doesn't send
-                // back pump status, use a timer to indicate that the future
-                // is complete when the duration is complete. A more robust
-                // implementation would send pump status back over the iface.
-                log.info("start: {}", pump.getName());
-                getIface().startPump(pump.getPos(), rate, duration);
-                KosUtil.scheduleCallback(() -> f.success(), duration);
-            }
+            // Use the iface to run the pump for the specified duration.
+            // Since the simple interface to the Zero4 board doesn't send
+            // back pump status, use a timer to indicate that the future
+            // is complete when the duration is complete. A more robust
+            // implementation would send pump status back over the iface.
+            log.info("start: {}", pump.getName());
+            withIfaceCatch(i -> i.startPump(pump.getPos(), rate, duration));
+            KosUtil.scheduleCallback(() -> f.success(), duration);
         });
 
         // Add a cancel event handler to the future
         future.append("cancel", FutureEvent.CANCEL, f -> {
             // If cancelled, use the iface to stop the pump
             log.info("cancel: {}", pump.getName());
-            if (getIface() != null) {
-                getIface().stopPump(pump.getPos());
-            }
+            withIfaceCatch(i -> i.stopPump(pump.getPos()));
         });
 
         // Add a complete event handler to the future
@@ -134,6 +130,14 @@ public class Zero4Board extends PumpBoard implements IfaceAware<Zero4BoardIface>
         return null;
     }
 
+    @Override
+    public void onIfaceConnect() throws Exception {
+    }
+
+    @Override
+    public void onIfaceDisconnect() throws Exception {
+    }
+
     /**
      * Part of the {@class IfaceAware} interface. When the blink connection
      * is established for the board, it will call {@code createIface()}
@@ -142,6 +146,8 @@ public class Zero4Board extends PumpBoard implements IfaceAware<Zero4BoardIface>
      */
     @Override
     public Zero4BoardIface createIface(BinaryMsgSession session) {
-        return new Zero4BoardIface(session);
+        Zero4BoardIface iface = new Zero4BoardIface(session);
+        setIface(iface);
+        return iface;
     }
 }

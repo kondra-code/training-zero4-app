@@ -12,9 +12,10 @@ import com.tccc.kos.commons.core.context.annotations.Autowired;
 import com.tccc.kos.commons.util.concurrent.future.FailedFuture;
 import com.tccc.kos.commons.util.concurrent.future.FutureWork;
 import com.tccc.kos.commons.util.concurrent.future.ParallelFuture;
+import com.tccc.kos.commons.util.concurrent.future.SequencedFuture;
 import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePourEngine;
 import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePourEngineConfig;
-import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePumpEventInitiator;
+import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePourSequence;
 import com.tccc.kos.ext.dispense.pipeline.beverage.Pourable;
 import com.tccc.kos.ext.dispense.pipeline.beverage.RecipeExtractor;
 import com.tccc.kos.ext.dispense.pipeline.beverage.graph.BevGraphBuilder;
@@ -107,7 +108,7 @@ public class Zero4PourEngine extends BeveragePourEngine<BeveragePourEngineConfig
      * Given a pourable, return a future that can pour the beverage.
      */
     @Override
-    protected FutureWork buildFuture(Pourable pourable, BeveragePumpEventInitiator initiator) {
+    protected FutureWork buildFuture(BeveragePourSequence seq, Pourable pourable) {
         // Grab the beverage definition from the pourable
         BevDef def = ((BevPourable)pourable).getBevDef();
 
@@ -127,16 +128,23 @@ public class Zero4PourEngine extends BeveragePourEngine<BeveragePourEngineConfig
         // Compute duration of pour from volume
         int durationMs = (int)((pourable.getEffectiveVolume() / bev.getRate()) * 1000);
 
-        // Parallel future to run all the pumps concurrently
-        ParallelFuture future = new ParallelFuture("bev-pour");
-        for (RecipePart part : bev.getRecipe()) {
-            future.add(extractor.getPumpForIngredient(part.getIngredientId()).tpour(durationMs, part.getRate()));
-        }
+        // sequenced future for the pour
+        SequencedFuture seqFuture = new SequencedFuture("pour");
 
-        // Add pumps to the initiator to generate required kOS pump events
-        initiator.setPumps(extractor.getPumps());
+        // first step is to mark all the pumps as started
+        seqFuture.add(new FutureWork("startPumps", f -> {
+            startPumps(extractor.getPumps(), pourable);
+            f.success();
+        }));
+
+        // Parallel future to run all the pumps concurrently
+        ParallelFuture pourFuture = new ParallelFuture("bev-pour");
+        for (RecipePart part : bev.getRecipe()) {
+            pourFuture.add(extractor.getPumpForIngredient(part.getIngredientId()).tpour(durationMs, part.getRate()));
+        }
+        seqFuture.add(pourFuture);
 
         // Return the future for the pour
-        return future;
+        return seqFuture;
     }
 }

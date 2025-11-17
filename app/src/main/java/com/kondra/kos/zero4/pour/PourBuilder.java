@@ -16,9 +16,9 @@ import com.tccc.kos.commons.util.concurrent.future.FutureWork;
 import com.tccc.kos.commons.util.concurrent.future.ParallelFuture;
 import com.tccc.kos.ext.dispense.Pump;
 import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePourEngine;
-import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePumpEventInitiator;
 import com.tccc.kos.ext.dispense.pipeline.beverage.Pourable;
 import com.tccc.kos.ext.dispense.pipeline.beverage.RecipeExtractor;
+import lombok.Getter;
 
 /**
  * Used by the Zero4PourEngine to aggregate pumps, ingredients, rates and so on
@@ -43,10 +43,11 @@ import com.tccc.kos.ext.dispense.pipeline.beverage.RecipeExtractor;
  * @author David Vogt
  * @version 2025-03-13
  */
-public class PourBuilder extends Pourable {
+public class PourBuilder {
     // reason codes
     private static final String REASON_errInvalidPourable = null;
 
+    @Getter
     private RecipeExtractor extractor;         // extract pumps from bev graph
     private Map<String, PumpInfo> pumpsByIng;  // track pumps by ingredient to accumulate rates
     private double totalRate;                  // total rate of this pour
@@ -97,7 +98,7 @@ public class PourBuilder extends Pourable {
     /**
      * Build the pour future
      */
-    public FutureWork pour(BeveragePumpEventInitiator initiator) {
+    public FutureWork pour() {
         // If can't be poured, return a failed future
         if (!extractor.isValid()) {
             return new FailedFuture("bev-pour", REASON_errInvalidPourable);
@@ -107,12 +108,11 @@ public class PourBuilder extends Pourable {
         List<Pump<?>> pumps = new ArrayList<>();
         ParallelFuture future = new ParallelFuture("bev-pour");
         for (PumpInfo info : pumpsByIng.values()) {
+            //call start pump on the pump
+
             pumps.add(info.pump);
             future.add(info.pump.tpour(durationMs, info.rate));
         }
-
-        // Add pumps to the initiator to generate required kOS pump events
-        initiator.setPumps(pumps);
 
         return future;
     }

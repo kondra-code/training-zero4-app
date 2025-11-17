@@ -57,7 +57,7 @@ public class Zero4Assembly extends DispenseAssembly implements CoreAssembly {
     private Zero4Board zero4;
 
     public Zero4Assembly(JsonDescriptor descriptor) throws Exception {
-        super("core", descriptor);
+        super("core");
     }
 
     /**

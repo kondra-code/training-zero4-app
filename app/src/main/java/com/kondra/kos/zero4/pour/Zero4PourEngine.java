@@ -9,13 +9,13 @@ import com.kondra.kos.zero4.brandset.Brandset;
 import com.kondra.kos.zero4.brandset.RecipePart;
 import com.kondra.kos.zero4.pour.BevPourable.BevDef;
 import com.tccc.kos.commons.core.context.annotations.Autowired;
+import com.tccc.kos.commons.util.concurrent.future.FailedFuture;
 import com.tccc.kos.commons.util.concurrent.future.FutureWork;
-import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePourEngine;
-import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePourEngineConfig;
-import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePumpEventInitiator;
-import com.tccc.kos.ext.dispense.pipeline.beverage.Pourable;
+import com.tccc.kos.ext.dispense.pipeline.beverage.*;
 import com.tccc.kos.ext.dispense.pipeline.beverage.graph.BevGraphBuilder;
 import com.tccc.kos.ext.dispense.pipeline.beverage.graph.BeverageNode;
+
+import java.util.List;
 
 /**
  * Pour engine for the Zero4 demo dispenser.
@@ -38,6 +38,8 @@ import com.tccc.kos.ext.dispense.pipeline.beverage.graph.BeverageNode;
  * @version 2025-03-13
  */
 public class Zero4PourEngine extends BeveragePourEngine<BeveragePourEngineConfig> {
+    public static final String REASON_errUnavailable = "errUnavailable";
+
     @Autowired
     private Zero4App app; // access to the brandset
 
@@ -104,13 +106,17 @@ public class Zero4PourEngine extends BeveragePourEngine<BeveragePourEngineConfig
      * Given a pourable, return a future that can pour the beverage.
      */
     @Override
-    protected FutureWork buildFuture(Pourable pourable, BeveragePumpEventInitiator initiator) {
+    protected FutureWork buildFuture(BeveragePourSequence seq, Pourable pourable) {
+
         // Pour builder to gather pumps and rates. Because Zero4 supports variable rate
         // ingredients, there is a bit more complexity in constructing a pour than simply
         // turning on the correct valves. This is handled by the builder.
         PourBuilder builder = new PourBuilder(pourable, this, app.getBrandset());
 
+        // fetch the pumps from the pour builder using the pour builder's extractor
+        startPumps(builder.getExtractor().getPumps(), pourable);
+
         // Return the future for the pour
-        return builder.pour(initiator);
+        return builder.pour();
     }
 }

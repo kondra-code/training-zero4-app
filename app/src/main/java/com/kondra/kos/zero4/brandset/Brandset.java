@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import com.tccc.kos.ext.dispense.service.ingredient.BaseIngredient;
-import com.tccc.kos.ext.dispense.service.ingredient.IngredientSource;
+import com.kosdev.kos.ext.dispense.service.ingredient.BaseIngredient;
+import com.kosdev.kos.ext.dispense.service.ingredient.IngredientSource;
 
 import lombok.Getter;
 import lombok.Setter;

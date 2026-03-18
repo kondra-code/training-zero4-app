@@ -62,3 +62,6 @@ target/
 gen/
 output/
 localrepo/
+
+# neovim files
+*.factorypath

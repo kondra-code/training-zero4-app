@@ -9,14 +9,15 @@ import java.util.List;
 import com.kondra.kos.zero4.hardware.pumps.BasePump;
 import com.kondra.kos.zero4.hardware.pumps.MacroPump;
 import com.kondra.kos.zero4.hardware.pumps.MicroPump;
-import com.tccc.kos.commons.core.service.blink.binarymsg.BinaryMsgSession;
-import com.tccc.kos.commons.util.KosUtil;
-import com.tccc.kos.commons.util.concurrent.future.FutureEvent;
-import com.tccc.kos.commons.util.concurrent.future.FutureWork;
-import com.tccc.kos.core.service.assembly.Assembly;
-import com.tccc.kos.core.service.hardware.IfaceAwareBoard;
-import com.tccc.kos.ext.dispense.Pump;
-import com.tccc.kos.ext.dispense.PumpBoard;
+import com.kosdev.kos.commons.core.service.blink.binarymsg.BinaryMsgSession;
+import com.kosdev.kos.commons.core.service.blink.binarymsg.IfaceClient;
+import com.kosdev.kos.commons.util.KosUtil;
+import com.kosdev.kos.commons.util.concurrent.future.FutureEvent;
+import com.kosdev.kos.commons.util.concurrent.future.FutureWork;
+import com.kosdev.kos.core.service.assembly.Assembly;
+import com.kosdev.kos.core.service.hardware.IfaceAwareBoard;
+import com.kosdev.kos.ext.dispense.Pump;
+import com.kosdev.kos.ext.dispense.PumpBoard;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -42,21 +43,23 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Getter
-public class Zero4Board extends PumpBoard implements IfaceAwareBoard<Zero4BoardIface> {
+public class Zero4Board extends PumpBoard implements IfaceAwareBoard {
     // reason codes
     private static final String REASON_errNotConnected = "errNotConnected";
 
-    @Getter @Setter
-    private Zero4BoardIface iface;
-    private MacroPump water;        // plain water macro
-    private MacroPump carb;         // carb water macro
-    private List<Pump<?>> micros;   // micro pumps
+    @Getter
+    @Setter
+    private IfaceClient<Zero4BoardIface> ifaceClient;
+    private MacroPump water; // plain water macro
+    private MacroPump carb; // carb water macro
+    private List<Pump<?>> micros; // micro pumps
 
     /**
      * Create a new Zero4 board.
      */
     public Zero4Board(Assembly assembly) {
         super(assembly, "zero4");
+        ifaceClient = new IfaceClient<>();
 
         // Create water valves
         carb = new MacroPump(this, "carb", null, 4);
@@ -64,8 +67,8 @@ public class Zero4Board extends PumpBoard implements IfaceAwareBoard<Zero4BoardI
 
         // Create micros
         micros = new ArrayList<>();
-        for (int i=0; i<4; i++) {
-            micros.add(new MicroPump(this, "micro" + (i+1), null, i));
+        for (int i = 0; i < 4; i++) {
+            micros.add(new MicroPump(this, "micro" + (i + 1), null, i));
         }
     }
 
@@ -89,7 +92,7 @@ public class Zero4Board extends PumpBoard implements IfaceAwareBoard<Zero4BoardI
             // is complete when the duration is complete. A more robust
             // implementation would send pump status back over the iface.
             log.info("start: {}", pump.getName());
-            withIfaceCatch(i -> i.startPump(pump.getPos(), rate, duration));
+            ifaceClient.withCatch(i -> i.startPump(pump.getPos(), rate, duration));
             KosUtil.scheduleCallback(() -> f.success(), duration);
         });
 
@@ -97,11 +100,11 @@ public class Zero4Board extends PumpBoard implements IfaceAwareBoard<Zero4BoardI
         future.append("cancel", FutureEvent.CANCEL, f -> {
             // If cancelled, use the iface to stop the pump
             log.info("cancel: {}", pump.getName());
-            withIfaceCatch(i -> i.stopPump(pump.getPos()));
+            ifaceClient.withCatch(i -> i.stopPump(pump.getPos()));
         });
 
         // Add a complete event handler to the future
-        future.append("stop",  FutureEvent.COMPLETE, f -> {
+        future.append("stop", FutureEvent.COMPLETE, f -> {
             // When the future is complete, regardless if how it ended, log
             // that the pump has stopped
             log.info("stop: {}", pump.getName());
@@ -131,23 +134,7 @@ public class Zero4Board extends PumpBoard implements IfaceAwareBoard<Zero4BoardI
     }
 
     @Override
-    public void onIfaceConnect() throws Exception {
-    }
-
-    @Override
-    public void onIfaceDisconnect() throws Exception {
-    }
-
-    /**
-     * Part of the {@class IfaceAware} interface. When the blink connection
-     * is established for the board, it will call {@code createIface()}
-     * to create the board-specific iface instance. This can be accessed
-     * via the {@code getIface()} call.
-     */
-    @Override
-    public Zero4BoardIface createIface(BinaryMsgSession session) {
-        Zero4BoardIface iface = new Zero4BoardIface(session);
-        setIface(iface);
-        return iface;
+    public void onLinkSession(BinaryMsgSession session) {
+        new Zero4BoardIface(session, ifaceClient);
     }
 }

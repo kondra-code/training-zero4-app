@@ -4,16 +4,16 @@
 package com.kondra.kos.zero4;
 
 import com.kondra.kos.zero4.brandset.Brandset;
-import com.tccc.kos.commons.core.context.annotations.Autowired;
-import com.tccc.kos.commons.core.vfs.VFSSource;
-import com.tccc.kos.commons.kab.KabFile;
-import com.tccc.kos.commons.util.KosUtil;
-import com.tccc.kos.commons.util.resource.ClassLoaderResourceLoader;
-import com.tccc.kos.core.service.app.BaseAppConfig;
-import com.tccc.kos.core.service.app.SystemApplication;
-import com.tccc.kos.core.service.browser.BrowserService;
-import com.tccc.kos.core.service.region.XmlRegionFactory;
-import com.tccc.kos.ext.dispense.service.ingredient.IngredientService;
+import com.kosdev.kos.commons.core.context.annotations.Autowired;
+import com.kosdev.kos.commons.core.service.region.XmlRegionFactory;
+import com.kosdev.kos.commons.core.vfs.VFSSource;
+import com.kosdev.kos.commons.kab.KabFile;
+import com.kosdev.kos.commons.util.KosUtil;
+import com.kosdev.kos.commons.util.resource.ClassLoaderResourceLoader;
+import com.kosdev.kos.core.service.app.BaseAppConfig;
+import com.kosdev.kos.core.service.app.SystemApplication;
+import com.kosdev.kos.core.service.browser.BrowserService;
+import com.kosdev.kos.ext.dispense.service.ingredient.IngredientService;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

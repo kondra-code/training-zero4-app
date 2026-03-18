@@ -4,9 +4,9 @@
 package com.kondra.kos.zero4.hardware.pumps;
 
 import com.kondra.kos.zero4.hardware.Zero4Board;
-import com.tccc.kos.commons.util.concurrent.future.FutureWork;
-import com.tccc.kos.ext.dispense.Pump;
-import com.tccc.kos.ext.dispense.PumpConfig;
+import com.kosdev.kos.commons.util.concurrent.future.FutureWork;
+import com.kosdev.kos.ext.dispense.Pump;
+import com.kosdev.kos.ext.dispense.PumpConfig;
 
 import lombok.Getter;
 

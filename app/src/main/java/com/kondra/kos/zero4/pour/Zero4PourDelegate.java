@@ -3,7 +3,7 @@
  */
 package com.kondra.kos.zero4.pour;
 
-import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePipelineDelegate;
+import com.kosdev.kos.ext.dispense.pipeline.beverage.BeveragePipelineDelegate;
 
 /**
  * kOS provides support for pouring fixed volume beverages. Common examples

@@ -3,7 +3,7 @@
  */
 package com.kondra.kos.zero4.hardware;
 
-import com.tccc.kos.core.service.spawn.Adapter;
+import com.kosdev.kos.core.service.spawn.Adapter;
 
 /**
  * Adapter for the Zero4 board.

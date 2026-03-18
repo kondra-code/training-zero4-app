@@ -8,18 +8,18 @@ import com.kondra.kos.zero4.brandset.Beverage;
 import com.kondra.kos.zero4.brandset.Brandset;
 import com.kondra.kos.zero4.brandset.RecipePart;
 import com.kondra.kos.zero4.pour.BevPourable.BevDef;
-import com.tccc.kos.commons.core.context.annotations.Autowired;
-import com.tccc.kos.commons.util.concurrent.future.FailedFuture;
-import com.tccc.kos.commons.util.concurrent.future.FutureWork;
-import com.tccc.kos.commons.util.concurrent.future.ParallelFuture;
-import com.tccc.kos.commons.util.concurrent.future.SequencedFuture;
-import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePourEngine;
-import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePourEngineConfig;
-import com.tccc.kos.ext.dispense.pipeline.beverage.BeveragePourSequence;
-import com.tccc.kos.ext.dispense.pipeline.beverage.Pourable;
-import com.tccc.kos.ext.dispense.pipeline.beverage.RecipeExtractor;
-import com.tccc.kos.ext.dispense.pipeline.beverage.graph.BevGraphBuilder;
-import com.tccc.kos.ext.dispense.pipeline.beverage.graph.BeverageNode;
+import com.kosdev.kos.commons.core.context.annotations.Autowired;
+import com.kosdev.kos.commons.util.concurrent.future.FailedFuture;
+import com.kosdev.kos.commons.util.concurrent.future.FutureWork;
+import com.kosdev.kos.commons.util.concurrent.future.ParallelFuture;
+import com.kosdev.kos.commons.util.concurrent.future.SequencedFuture;
+import com.kosdev.kos.ext.dispense.pipeline.beverage.BeveragePourEngine;
+import com.kosdev.kos.ext.dispense.pipeline.beverage.BeveragePourEngineConfig;
+import com.kosdev.kos.ext.dispense.pipeline.beverage.BeveragePourSequence;
+import com.kosdev.kos.ext.dispense.pipeline.beverage.Pourable;
+import com.kosdev.kos.ext.dispense.pipeline.beverage.RecipeExtractor;
+import com.kosdev.kos.ext.dispense.pipeline.beverage.graph.BevGraphBuilder;
+import com.kosdev.kos.ext.dispense.pipeline.beverage.graph.BeverageNode;
 
 /**
  * Pour engine for the Zero4 demo dispenser.

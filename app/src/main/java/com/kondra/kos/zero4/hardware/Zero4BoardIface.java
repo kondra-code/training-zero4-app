@@ -5,10 +5,11 @@ package com.kondra.kos.zero4.hardware;
 
 import java.io.IOException;
 
-import com.tccc.kos.commons.core.service.blink.binarymsg.BinaryMsg;
-import com.tccc.kos.commons.core.service.blink.binarymsg.BinaryMsgIface;
-import com.tccc.kos.commons.core.service.blink.binarymsg.BinaryMsgSession;
-import com.tccc.kos.commons.util.convert.Convert;
+import com.kosdev.kos.commons.core.service.blink.binarymsg.BinaryMsg;
+import com.kosdev.kos.commons.core.service.blink.binarymsg.BinaryMsgIface;
+import com.kosdev.kos.commons.core.service.blink.binarymsg.BinaryMsgSession;
+import com.kosdev.kos.commons.core.service.blink.binarymsg.IfaceClient;
+import com.kosdev.kos.commons.util.convert.Convert;
 
 /**
  * Iface that provides access to the Zero4 board hardware via adapter.
@@ -32,16 +33,16 @@ public class Zero4BoardIface extends BinaryMsgIface {
     // api numbers for the protocol
     private static final int API_PUMP = 2;
 
-    public Zero4BoardIface(BinaryMsgSession session) {
-        super(NAME, session, null);
+    public Zero4BoardIface(BinaryMsgSession session, IfaceClient<Zero4BoardIface> client) {
+        super(NAME, session, client, null);
     }
 
     /**
      * Start a pump.
      *
-     * @param pos          0-3 are micros, 4/5 are macros
-     * @param rate         rate of to pour (ignored by macros)
-     * @param durationMs   how long to pour
+     * @param pos        0-3 are micros, 4/5 are macros
+     * @param rate       rate of to pour (ignored by macros)
+     * @param durationMs how long to pour
      */
     public void startPump(int pos, double rate, int durationMs) throws IOException {
         BinaryMsg msg = msg(API_PUMP);
@@ -54,7 +55,7 @@ public class Zero4BoardIface extends BinaryMsgIface {
     /**
      * Stop a pump.
      *
-     * @param pos   0-3 are micros, 4/5 are macros
+     * @param pos 0-3 are micros, 4/5 are macros
      */
     public void stopPump(int pos) throws IOException {
         // stop the pump by sending a zero rate and duration

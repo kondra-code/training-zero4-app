@@ -4,8 +4,8 @@
 package com.kondra.kos.zero4.pour;
 
 import java.io.IOException;
-import com.tccc.kos.commons.util.KosUtil;
-import com.tccc.kos.ext.dispense.pipeline.beverage.Pourable;
+import com.kosdev.kos.commons.util.KosUtil;
+import com.kosdev.kos.ext.dispense.pipeline.beverage.Pourable;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -3,14 +3,14 @@
  */
 package com.kondra.kos.zero4;
 
-import com.tccc.kos.commons.core.context.annotations.Autowired;
-import com.tccc.kos.commons.core.dispatcher.annotations.ApiController;
-import com.tccc.kos.commons.core.dispatcher.annotations.ApiEndpoint;
-import com.tccc.kos.commons.core.dispatcher.annotations.ApiEndpoint.Param;
-import com.tccc.kos.commons.core.dispatcher.annotations.HandleVariable;
-import com.tccc.kos.commons.core.service.trouble.TroubleService;
-import com.tccc.kos.ext.dispense.Pump;
-import com.tccc.kos.ext.dispense.PumpTrouble;
+import com.kosdev.kos.commons.core.context.annotations.Autowired;
+import com.kosdev.kos.commons.core.dispatcher.annotations.ApiController;
+import com.kosdev.kos.commons.core.dispatcher.annotations.ApiEndpoint;
+import com.kosdev.kos.commons.core.dispatcher.annotations.ApiEndpoint.Param;
+import com.kosdev.kos.commons.core.dispatcher.annotations.HandleVariable;
+import com.kosdev.kos.commons.core.service.trouble.TroubleService;
+import com.kosdev.kos.ext.dispense.Pump;
+import com.kosdev.kos.ext.dispense.PumpTrouble;
 
 /**
  * Test controller to block / unblock ingredients

@@ -3,7 +3,7 @@
  */
 package com.kondra.kos.zero4.brandset;
 
-import com.tccc.kos.ext.dispense.service.ingredient.BaseIngredient;
+import com.kosdev.kos.ext.dispense.service.ingredient.BaseIngredient;
 
 /**
  * Ingredient in the Zero4 brandset. Since we don't need any additional

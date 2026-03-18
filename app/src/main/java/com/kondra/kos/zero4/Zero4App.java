@@ -56,16 +56,7 @@ public class Zero4App extends SystemApplication<BaseAppConfig> {
     public void load() {
         // add test controller so we can enable / disable pumps
         addToCtx(new TestController());
-    }
 
-    /**
-     * Called when the application is started. If this application had any
-     * services, controllers or other beans to add to the application {@code BeanContext}
-     * then we would create these in {@code load()}. This would allow kOS to autowire,
-     * initialize and configure the beans before {@code start()} is called.
-     */
-    @Override
-    public void start() throws Exception {
         // Many devices have settings or functions that depend on the geographic region
         // device is located in, such as default units, time/date formats, rfid frequencies,
         // regulatory information and so on. kOS provides {@code RegionService} to centrally
@@ -78,6 +69,16 @@ public class Zero4App extends SystemApplication<BaseAppConfig> {
         // Install the region data into {@code RegionService}. At this point the region can be
         // changed using {@code RegionService} api's or even standard config api's.
         installRegions(factory.getRegions());
+    }
+
+    /**
+     * Called when the application is started. If this application had any
+     * services, controllers or other beans to add to the application {@code BeanContext}
+     * then we would create these in {@code load()}. This would allow kOS to autowire,
+     * initialize and configure the beans before {@code start()} is called.
+     */
+    @Override
+    public void start() throws Exception {
 
         // This application defines a custom brandset which contains a list of possible
         // ingredients and recipe-based beverages. This data is stored in a separate KAB

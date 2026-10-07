@@ -23,11 +23,19 @@ jobs:
             path: ${{ github.event.repository.name }}
             lfs: true
 
-      - name: Build and Publish
+      - name: Studio 1 Build and Publish
         env:
             KOSBUILD_SECRET_URL: ${{ secrets.KOSBUILD_SECRET_URL }}
             KOSBUILD_SECRET_PASSWORD: ${{ secrets.KOSBUILD_SECRET_PASSWORD }}
 
         working-directory: ./${{ github.event.repository.name }}
         run: |
-            kos_build_handler.sh automation .github/kosbuild-development.json
+            kos_build_handler.sh automation .github/studio1/kosbuild-development.json
+
+      - name: Studio 2 Build and Publish
+        env:
+            STUDIO_APIKEY: ${{ secrets.STUDIO2_APIKEY }}
+
+        working-directory: ./${{ github.event.repository.name }}
+        run: |
+            kos_build_handler.sh automation .github/studio2/kosbuild-development.json

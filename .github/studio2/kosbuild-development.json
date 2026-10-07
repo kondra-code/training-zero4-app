@@ -1,20 +1,18 @@
 {
   "studio2": true,
-  "default_keyset": "prod.demo-tutorials",
+  "default_keyset": "test.demo-tutorials",
   "build_cmd": "./quickbuild.sh",
 
   "artifacts": [
     {
       "id": "training-zero4-app",
       "filename": "app/target/training-zero4-app-${KOS_STD_VERSION_REGEX}.kab",
-      "artifactstore": "defaultArtifact",
-      "marketplace": 1
+      "artifactstore": "defaultArtifact"
     },
     {
       "id": "training-zero4-brandset",
       "filename": "brandset/target/training-zero4-brandset-${KOS_STD_VERSION_REGEX}.kab",
-      "artifactstore": "defaultArtifact",
-      "marketplace": 1
+      "artifactstore": "defaultArtifact"
     }
   ]
 }

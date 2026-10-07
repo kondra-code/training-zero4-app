@@ -7,13 +7,13 @@
     {
       "id": "training-zero4-app",
       "filename": "app/target/training-zero4-app-${KOS_STD_VERSION_REGEX}.kab",
-      "artifactstore": "ArtifactStore",
+      "artifactstore": "defaultArtifact",
       "marketplace": 1
     },
     {
       "id": "training-zero4-brandset",
       "filename": "brandset/target/training-zero4-brandset-${KOS_STD_VERSION_REGEX}.kab",
-      "artifactstore": "ArtifactStore",
+      "artifactstore": "defaultArtifact",
       "marketplace": 1
     }
   ]

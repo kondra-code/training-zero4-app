@@ -14,12 +14,16 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.kosdev.kos.sdk.api</groupId>
+            <groupId>com.kosdev.kos2.sdk.api</groupId>
             <artifactId>api-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.kosdev.kos.sdk.api</groupId>
+            <groupId>com.kosdev.kos2.sdk.api</groupId>
             <artifactId>api-dispense</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kosdev.kos2.sdk.api</groupId>
+            <artifactId>api-info</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -10,8 +10,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <kos.version>1.9.0</kos.version>
-        <kos-kab-maven-plugin.version>1.3.5</kos-kab-maven-plugin.version>
+        <kos.version>0.0.0-SNAPSHOT</kos.version>
         <lombok.version>1.18.42</lombok.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
@@ -31,7 +30,7 @@
         <dependencies>
             <!-- kOS SDK -->
             <dependency>
-                <groupId>com.kosdev.kos.sdk.bom</groupId>
+                <groupId>com.kosdev.kos2.sdk.bom</groupId>
                 <artifactId>kos-bom</artifactId>
                 <version>${kos.version}</version>
                 <type>pom</type>
@@ -81,9 +80,8 @@
 
                 <!-- kOS Maven Plugin -->
                 <plugin>
-                    <groupId>com.kosdev.kos.maven</groupId>
+                    <groupId>com.kosdev.kos2.maven</groupId>
                     <artifactId>kos-kab-maven-plugin</artifactId>
-                    <version>${kos-kab-maven-plugin.version}</version>
                 </plugin>
 
             </plugins>
